@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('photo_sizes', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->integer('width')->nullable();
+            $table->integer('height')->nullable();
+            $table->integer('quality')->default(85);
+            $table->string('format')->default('jpg');
+            $table->string('description')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->integer('sort_order')->default(0);
+            $table->timestamps();
+
+            $table->index(['is_active']);
+            $table->index(['sort_order']);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('photo_sizes');
+    }
+};
