@@ -1,27 +1,51 @@
-*.log
-.DS_Store
+﻿# Dependencias
+/node_modules
+/vendor
+# Variaveis de ambiente
 .env
 .env.backup
-.env.production
-.phpactor.json
-.phpunit.result.cache
-/.codex
-/.cursor/
-/.idea
-/.nova
-/.phpunit.cache
-/.vscode
-/.zed
-/auth.json
-/node_modules
-/public/build
-/public/fonts-manifest.dev.json
+.env.local
+# Vite/Laravel
 /public/hot
+/public/build
 /public/storage
+# Storage Laravel
 /storage/*.key
-/storage/pail
-/vendor
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+!/storage/framework/cache/data/.gitkeep
+!/storage/framework/sessions/.gitkeep
+!/storage/framework/views/.gitkeep
+!/storage/logs/.gitkeep
+# Bancos de dados e dumps (LGPD)
+*.sql
+*.sqlite
+*.db
+database/database.sqlite
+# Logs
+npm-debug.log*
+yarn-error.log*
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
 _ide_helper.php
-Homestead.json
-Homestead.yaml
-Thumbs.db
+.phpactor.json
+# Testes
+.phpunit.result.cache
+.phpunit.cache
+# IA Agentes (regras locais)
+.kiro/
+.claude/
+.trae/
+.ai/
+# Node package locks (opcional — manter se projeto publico)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+# Fotos / chunks de upload de clientes (PRIVACIDADE TOTAL LGPD)
+storage/app/public/**
+storage/app/chunks/**
+storage/app/photos/**
