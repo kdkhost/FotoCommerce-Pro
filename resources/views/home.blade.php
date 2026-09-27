@@ -753,6 +753,11 @@
                     <a href="#portfolio">Portfólio</a>
                     <a href="#albuns">Álbuns</a>
                     <a href="#contato">Contato</a>
+                    @auth
+                        <a href="{{ route('admin.dashboard') }}" style="color:var(--color-primary); font-weight:600;">Painel Administrativo</a>
+                    @else
+                        <a href="{{ route('login') }}" style="opacity:.6;">Acesso Restrito</a>
+                    @endauth
                 </nav>
             </div>
         </div>
