@@ -6,6 +6,9 @@ use Symfony\Component\Console\Input\ArgvInput;
 
 define('LARAVEL_START', microtime(true));
 
+// Force an absolute error_log path so CLI errors never scatter relative error_log files across cwd.
+ini_set('error_log', __DIR__.'/storage/logs/php-error.log');
+
 // Register the Composer autoloader...
 require __DIR__.'/vendor/autoload.php';
 

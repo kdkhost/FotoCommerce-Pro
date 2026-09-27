@@ -13,6 +13,18 @@
 - Adicionadas regras Apache na raiz para remover `/public` das URLs e encaminhar as requisições ao front controller.
 - Identificado que `/` ainda renderiza a página padrão do Laravel; controladores de negócio e página inicial própria não estão presentes no código disponível.
 - Auditoria encontrou 48 arquivos de migration, enquanto a versão publicada neste changelog declara 49.
+- `artisan` e `public/index.php`: `error_log` do PHP fixado em caminho absoluto (`storage/logs/php-error.log`), eliminando arquivos `error_log` soltos que apareciam em diversas pastas do projeto conforme o diretório de execução.
+
+#### 🚀 Auditoria e correções em produção (hospedagem `fotoecomerce.kdkhost.com.br`)
+- Acesso SSH configurado com chave dedicada `ed25519` (autenticação por senha desativada para este uso).
+- Confirmado que o painel já serve `public_html/public` como document root real; a pasta `public` não fica exposta como caminho funcional adicional.
+- `php artisan storage:link` executado — o link `public/storage` estava ausente, quebrando exibição de arquivos enviados.
+- `.env` de produção corrigido: `APP_ENV=local` → `production` e `APP_DEBUG=true` → `false` (evita vazamento de stack trace e dados sensíveis a visitantes). Backup do `.env` anterior preservado no servidor.
+- Caches de produção regenerados (`config:cache`, `route:cache`, `view:cache`, `event:cache`).
+- Cron do usuário configurado (inexistente antes): `schedule:run` e `queue:work --stop-when-empty` a cada minuto — sem isso o agendador (limpeza de pedidos expirados, relatório diário) e as filas de e-mail/pedido nunca eram processados.
+- Removidos ~13 arquivos `error_log` soltos gerados em `app/`, `database/`, `tests/`, `config/`, `routes/` etc.
+- **Pendente (requer o usuário):** `MERCADOPAGO_ACCESS_TOKEN` e `MERCADOPAGO_PUBLIC_KEY` não estão definidos no `.env` de produção — checkout/pagamento não funciona até essas credenciais serem cadastradas.
+- **Pendente:** a home pública e os módulos de negócio (controllers de Admin/Customer/Auth/API) continuam ausentes do código-fonte; a correção de infraestrutura não substitui a implementação das funcionalidades do sistema.
 
 ## 🎉 [v1.0.0-RC1] — 2026-09-25 20:00
 ### Build: `20260925-RC1` · Tag GitHub: `v1.0.0`
