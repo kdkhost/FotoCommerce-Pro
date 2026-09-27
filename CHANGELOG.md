@@ -8,6 +8,12 @@
 
 ---
 
+## [Não lançado] — 2026-09-26
+#### 🔧 Correções e auditoria
+- Adicionadas regras Apache na raiz para remover `/public` das URLs e encaminhar as requisições ao front controller.
+- Identificado que `/` ainda renderiza a página padrão do Laravel; controladores de negócio e página inicial própria não estão presentes no código disponível.
+- Auditoria encontrou 48 arquivos de migration, enquanto a versão publicada neste changelog declara 49.
+
 ## 🎉 [v1.0.0-RC1] — 2026-09-25 20:00
 ### Build: `20260925-RC1` · Tag GitHub: `v1.0.0`
 
