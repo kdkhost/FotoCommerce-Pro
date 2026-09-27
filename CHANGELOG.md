@@ -32,6 +32,11 @@
 - `tests/Feature/ExampleTest.php`: habilitado `RefreshDatabase` (estava comentado) — a rota `/` agora consulta o banco, exigindo migrations no teste.
 - Banco de produção auditado: sem álbuns, categorias, fotos ou perfil de fotógrafo cadastrados ainda — a home exibe estado vazio até o admin cadastrar esse conteúdo (painel administrativo ainda não implementado).
 
+#### 🎨 Redesign moderno + dados de demonstração
+- Criado `database/seeders/PublicShowcaseSeeder`: gera (de forma idempotente) um fotógrafo demo, perfil, 5 categorias de álbum e 6 álbuns publicados, com imagens de capa geradas via GD (gradientes abstratos, sem depender de serviços externos). Registrado no `DatabaseSeeder`.
+- `resources/views/home.blade.php` redesenhada: layout moderno (hero em gradiente, seções Sobre/Álbuns/Contato, cards com hover), responsivo em todas as larguras (grid fluido `auto-fill`, breakpoints para about/contato/nav).
+- Menu mobile em drawer lateral: desliza da esquerda para a direita ao abrir (`translateX(-100%)` → `translateX(0)`) e no sentido inverso ao fechar, com overlay animado, ícone hambúrguer que vira "X", bloqueio de scroll do body, fechamento por clique fora, por link ou tecla `Esc`, e `prefers-reduced-motion` respeitado.
+
 ## 🎉 [v1.0.0-RC1] — 2026-09-25 20:00
 ### Build: `20260925-RC1` · Tag GitHub: `v1.0.0`
 

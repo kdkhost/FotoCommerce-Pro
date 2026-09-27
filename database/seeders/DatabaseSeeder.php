@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             SiteSectionSeeder::class,
             EmailTemplateSeeder::class,
             PaymentGatewaySeeder::class,
+            PublicShowcaseSeeder::class,
         ]);
     }
 }
