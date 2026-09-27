@@ -17,6 +17,7 @@
             --font-base: {{ $settings->font_family_base ?? 'system-ui' }}, sans-serif;
             --font-heading: {{ $settings->font_family_heading ?? 'system-ui' }}, sans-serif;
             --shadow-soft: 0 10px 30px -12px rgba(15, 23, 42, .18);
+            --shadow-strong: 0 24px 48px -18px rgba(15, 23, 42, .32);
             --radius-lg: 1rem;
             --header-height: 4.25rem;
         }
@@ -35,8 +36,9 @@
         h1, h2, h3 { font-family: var(--font-heading); margin: 0; }
         a { color: inherit; text-decoration: none; }
         img { max-width: 100%; display: block; }
+        svg { flex-shrink: 0; }
 
-        .container { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
+        .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
 
         /* ---------- Header ---------- */
         .site-header {
@@ -60,10 +62,10 @@
 
         .brand { font-weight: 700; font-size: 1.25rem; color: var(--color-text); }
 
-        .desktop-nav { display: none; align-items: center; gap: 2rem; }
+        .desktop-nav { display: none; align-items: center; gap: 1.75rem; }
         .desktop-nav a {
             font-weight: 500;
-            font-size: .95rem;
+            font-size: .93rem;
             color: var(--color-text);
             opacity: .8;
             transition: opacity .2s ease, color .2s ease;
@@ -74,17 +76,19 @@
             display: inline-flex;
             align-items: center;
             gap: .5rem;
-            padding: .65rem 1.4rem;
+            padding: .7rem 1.5rem;
             border-radius: 999px;
             font-weight: 600;
             font-size: .9rem;
             border: none;
             cursor: pointer;
             transition: transform .2s ease, box-shadow .2s ease;
+            white-space: nowrap;
         }
         .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); }
         .btn-primary { background: var(--color-primary); color: #fff; }
         .btn-accent { background: var(--color-accent); color: #fff; }
+        .btn-outline { background: transparent; border: 1.5px solid currentColor; }
 
         /* ---------- Mobile menu toggle ---------- */
         .menu-toggle {
@@ -137,6 +141,7 @@
             display: flex;
             flex-direction: column;
             padding: 1.5rem;
+            overflow-y: auto;
         }
         .drawer.is-open { transform: translateX(0); }
 
@@ -157,9 +162,9 @@
             cursor: pointer;
         }
 
-        .drawer-nav { display: flex; flex-direction: column; gap: 1.5rem; }
+        .drawer-nav { display: flex; flex-direction: column; gap: 1.4rem; }
         .drawer-nav a {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
             color: var(--color-text);
         }
@@ -168,35 +173,136 @@
 
         body.drawer-locked { overflow: hidden; }
 
-        @media (min-width: 768px) {
+        @media (min-width: 900px) {
             .desktop-nav { display: flex; }
             .menu-toggle { display: none; }
         }
 
         /* ---------- Hero ---------- */
         .hero {
-            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            position: relative;
             color: #fff;
-            padding: 5rem 0 6rem;
+            padding: 7rem 0 7.5rem;
             text-align: center;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
         }
-        .hero h1 { font-size: clamp(2rem, 5vw, 3.25rem); margin-bottom: 1rem; }
-        .hero p { font-size: clamp(1rem, 2vw, 1.25rem); opacity: .92; max-width: 640px; margin: 0 auto 2rem; }
+        .hero .eyebrow {
+            display: inline-block;
+            font-size: .8rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, .18);
+            padding: .4rem 1rem;
+            border-radius: 999px;
+            margin-bottom: 1.25rem;
+        }
+        .hero h1 { font-size: clamp(2.1rem, 5vw, 3.5rem); margin-bottom: 1rem; }
+        .hero p { font-size: clamp(1rem, 2vw, 1.25rem); opacity: .94; max-width: 640px; margin: 0 auto 2.25rem; }
         .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
         .hero-actions .btn-light { background: #fff; color: var(--color-text); }
+        .hero-actions .btn-outline { border-color: rgba(255, 255, 255, .7); color: #fff; }
 
         /* ---------- Sections ---------- */
-        section { padding: 4.5rem 0; }
+        section { padding: 5rem 0; }
         section.alt { background: var(--color-surface); }
 
-        .section-title { font-size: clamp(1.5rem, 3vw, 2.1rem); margin-bottom: .75rem; text-align: center; }
+        .section-title { font-size: clamp(1.6rem, 3vw, 2.15rem); margin-bottom: .75rem; text-align: center; }
         .section-subtitle {
             text-align: center;
             color: var(--color-secondary);
-            max-width: 620px;
-            margin: 0 auto 2.75rem;
+            max-width: 640px;
+            margin: 0 auto 3rem;
         }
 
+        /* ---------- Services ---------- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 1.5rem;
+        }
+        .service-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            padding: 2rem 1.75rem;
+            box-shadow: var(--shadow-soft);
+            transition: transform .3s ease, box-shadow .3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: .9rem;
+        }
+        .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-strong); }
+        .service-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 999px;
+            background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-primary);
+        }
+        .service-card h3 { font-size: 1.1rem; }
+        .service-card p { color: var(--color-secondary); font-size: .92rem; margin: 0; flex: 1; }
+        .service-card .service-link { font-weight: 600; font-size: .88rem; color: var(--color-primary); }
+
+        /* ---------- Portfolio masonry ---------- */
+        .portfolio-grid {
+            column-count: 1;
+            column-gap: 1.25rem;
+        }
+        @media (min-width: 640px) { .portfolio-grid { column-count: 2; } }
+        @media (min-width: 980px) { .portfolio-grid { column-count: 3; } }
+
+        .portfolio-item {
+            break-inside: avoid;
+            margin-bottom: 1.25rem;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            position: relative;
+            box-shadow: var(--shadow-soft);
+        }
+        .portfolio-item img {
+            width: 100%;
+            transition: transform .5s ease;
+        }
+        .portfolio-item:hover img { transform: scale(1.06); }
+        .portfolio-item .caption {
+            position: absolute;
+            inset: auto 0 0 0;
+            padding: 1rem;
+            background: linear-gradient(0deg, rgba(15,23,42,.75), transparent);
+            color: #fff;
+            font-size: .85rem;
+            opacity: 0;
+            transition: opacity .3s ease;
+        }
+        .portfolio-item:hover .caption { opacity: 1; }
+
+        /* ---------- Process ---------- */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.75rem;
+            counter-reset: step;
+        }
+        .process-step { text-align: center; }
+        .process-step .step-number {
+            width: 46px;
+            height: 46px;
+            margin: 0 auto .9rem;
+            border-radius: 999px;
+            background: var(--color-primary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        .process-step h3 { font-size: 1rem; margin-bottom: .4rem; }
+        .process-step p { color: var(--color-secondary); font-size: .88rem; margin: 0; }
+
+        /* ---------- About ---------- */
         .about-content {
             display: grid;
             gap: 2rem;
@@ -223,6 +329,7 @@
             color: var(--color-secondary);
         }
 
+        /* ---------- Albums ---------- */
         .albums-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
@@ -236,7 +343,7 @@
             box-shadow: var(--shadow-soft);
             transition: transform .3s ease, box-shadow .3s ease;
         }
-        .album-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px -14px rgba(15, 23, 42, .28); }
+        .album-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-strong); }
 
         .album-card .thumb {
             position: relative;
@@ -276,6 +383,18 @@
             box-shadow: var(--shadow-soft);
         }
 
+        /* ---------- CTA banner ---------- */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            color: #fff;
+            border-radius: var(--radius-lg);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .cta-banner h2 { margin-bottom: .75rem; }
+        .cta-banner p { opacity: .95; max-width: 520px; margin: 0 auto 1.75rem; }
+
+        /* ---------- Contact ---------- */
         .contact-grid {
             display: grid;
             gap: 1.5rem;
@@ -296,15 +415,40 @@
         .contact-card strong { font-size: 1.05rem; }
 
         footer.site-footer {
+            background: var(--color-text);
+            color: rgba(255, 255, 255, .75);
+        }
+        .footer-inner {
+            padding: 3rem 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+        }
+        .footer-brand { color: #fff; font-weight: 700; font-size: 1.15rem; margin-bottom: .5rem; }
+        .footer-social { display: flex; gap: .9rem; margin-top: .75rem; }
+        .footer-social a {
+            width: 38px;
+            height: 38px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .2s ease;
+        }
+        .footer-social a:hover { background: var(--color-primary); }
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, .12);
+            padding: 1.25rem 0;
             text-align: center;
-            padding: 2.5rem 1.5rem;
-            color: var(--color-secondary);
-            font-size: .9rem;
+            font-size: .85rem;
         }
 
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
-            .drawer, .drawer-overlay, .album-card, .album-card .thumb img, .menu-toggle span, .btn {
+            .drawer, .drawer-overlay, .album-card, .album-card .thumb img,
+            .menu-toggle span, .btn, .service-card, .portfolio-item img {
                 transition: none !important;
             }
         }
@@ -318,8 +462,10 @@
 
             <nav class="desktop-nav">
                 <a href="#inicio">Início</a>
-                <a href="#sobre">Sobre</a>
+                <a href="#servicos">Serviços</a>
+                <a href="#portfolio">Portfólio</a>
                 <a href="#albuns">Álbuns</a>
+                <a href="#sobre">Sobre</a>
                 <a href="#contato">Contato</a>
                 @if ($profile?->whatsapp_number)
                     <a class="btn btn-primary" href="https://wa.me/{{ preg_replace('/\D/', '', $profile->whatsapp_number) }}" target="_blank" rel="noopener">
@@ -343,8 +489,10 @@
         </div>
         <nav class="drawer-nav">
             <a href="#inicio" data-drawer-link>Início</a>
-            <a href="#sobre" data-drawer-link>Sobre</a>
+            <a href="#servicos" data-drawer-link>Serviços</a>
+            <a href="#portfolio" data-drawer-link>Portfólio</a>
             <a href="#albuns" data-drawer-link>Álbuns</a>
+            <a href="#sobre" data-drawer-link>Sobre</a>
             <a href="#contato" data-drawer-link>Contato</a>
         </nav>
         <div class="drawer-footer">
@@ -359,21 +507,117 @@
     <main>
         <section id="inicio" class="hero">
             <div class="container">
+                <span class="eyebrow">Fotografia profissional</span>
                 <h1>{{ $settings->site_name ?? config('app.name', 'Photo Commerce') }}</h1>
                 <p>{{ $settings->site_slogan ?? 'Registrando os melhores momentos da sua vida' }}</p>
                 <div class="hero-actions">
-                    <a class="btn btn-light" href="#albuns">Ver álbuns</a>
+                    <a class="btn btn-light" href="#portfolio">Ver portfólio</a>
                     @if ($profile?->whatsapp_number)
-                        <a class="btn btn-accent" href="https://wa.me/{{ preg_replace('/\D/', '', $profile->whatsapp_number) }}" target="_blank" rel="noopener">
-                            Fale conosco
+                        <a class="btn btn-outline" href="https://wa.me/{{ preg_replace('/\D/', '', $profile->whatsapp_number) }}" target="_blank" rel="noopener">
+                            Solicitar orçamento
                         </a>
                     @endif
                 </div>
             </div>
         </section>
 
+        <section id="servicos">
+            <div class="container">
+                <h2 class="section-title">Serviços</h2>
+                <p class="section-subtitle">Cobertura fotográfica sob medida para cada tipo de momento.</p>
+
+                @if ($categories->isNotEmpty())
+                    <div class="services-grid">
+                        @foreach ($categories as $category)
+                            @php
+                                $icons = [
+                                    'casamentos' => 'heart',
+                                    'ensaios' => 'camera',
+                                    'aniversarios' => 'gift',
+                                    'corporativo' => 'briefcase',
+                                    'gestante-newborn' => 'baby',
+                                ];
+                                $icon = $icons[$category->slug] ?? 'camera';
+                                $whatsappText = rawurlencode('Olá! Gostaria de solicitar um orçamento para '.$category->name.'.');
+                            @endphp
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    @include('components.icon', ['name' => $icon])
+                                </div>
+                                <h3>{{ $category->name }}</h3>
+                                <p>{{ $category->description ?? 'Cobertura fotográfica completa, com edição profissional e entrega digital.' }}</p>
+                                @if ($profile?->whatsapp_number)
+                                    <a class="service-link" href="https://wa.me/{{ preg_replace('/\D/', '', $profile->whatsapp_number) }}?text={{ $whatsappText }}" target="_blank" rel="noopener">
+                                        Solicitar orçamento →
+                                    </a>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="empty-state">
+                        <p>Serviços em breve.</p>
+                    </div>
+                @endif
+            </div>
+        </section>
+
+        <section id="portfolio" class="alt">
+            <div class="container">
+                <h2 class="section-title">Portfólio</h2>
+                <p class="section-subtitle">Uma seleção de imagens recentes que mostram nosso olhar fotográfico.</p>
+
+                @if ($portfolioPhotos->isNotEmpty())
+                    <div class="portfolio-grid">
+                        @foreach ($portfolioPhotos as $photo)
+                            @if ($photo->image_url)
+                                <div class="portfolio-item">
+                                    <img src="{{ $photo->image_url }}" alt="{{ $photo->title ?? $photo->album?->title }}" loading="lazy">
+                                    <div class="caption">{{ $photo->album?->title }}</div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                @else
+                    <div class="empty-state">
+                        <p>Novas fotos em breve.</p>
+                    </div>
+                @endif
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <h2 class="section-title">Como funciona</h2>
+                <p class="section-subtitle">Um processo simples, do primeiro contato até a entrega das fotos.</p>
+
+                <div class="process-grid">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h3>Contato</h3>
+                        <p>Conte sobre o seu evento e receba uma proposta personalizada.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h3>Sessão</h3>
+                        <p>Cobertura fotográfica no dia combinado, com toda tranquilidade.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h3>Seleção</h3>
+                        <p>Acesso ao álbum digital para visualizar e escolher as fotos.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h3>Entrega</h3>
+                        <p>Download das fotos em alta resolução, prontas para guardar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         @if ($profile)
-            <section id="sobre">
+            <section id="sobre" class="alt">
                 <div class="container about-content">
                     <div class="about-card">
                         <h2 class="section-title" style="text-align:left; margin-bottom:1rem;">
@@ -395,18 +639,18 @@
             </section>
         @endif
 
-        <section id="albuns" class="alt">
+        <section id="albuns">
             <div class="container">
                 <h2 class="section-title">Álbuns</h2>
-                <p class="section-subtitle">Uma seleção dos trabalhos mais recentes, prontos para reviver cada momento.</p>
+                <p class="section-subtitle">Coleções completas dos trabalhos mais recentes.</p>
 
                 @if ($albums->isNotEmpty())
                     <div class="albums-grid">
                         @foreach ($albums as $album)
                             <div class="album-card">
                                 <div class="thumb">
-                                    @if ($album->cover_image)
-                                        <img src="{{ Illuminate\Support\Facades\Storage::disk('photos_public')->url($album->cover_image) }}" alt="{{ $album->title }}" loading="lazy">
+                                    @if ($album->cover_url)
+                                        <img src="{{ $album->cover_url }}" alt="{{ $album->title }}" loading="lazy">
                                     @endif
                                     @if ($album->category)
                                         <span class="badge">{{ $album->category->name }}</span>
@@ -426,6 +670,20 @@
                         <p>Novos álbuns em breve. Volte para conferir as próximas sessões fotográficas.</p>
                     </div>
                 @endif
+            </div>
+        </section>
+
+        <section class="alt">
+            <div class="container">
+                <div class="cta-banner">
+                    <h2>Vamos registrar sua história?</h2>
+                    <p>Entre em contato e monte, sem compromisso, uma proposta sob medida para o seu momento.</p>
+                    @if ($profile?->whatsapp_number)
+                        <a class="btn btn-light" href="https://wa.me/{{ preg_replace('/\D/', '', $profile->whatsapp_number) }}" target="_blank" rel="noopener">
+                            Falar no WhatsApp
+                        </a>
+                    @endif
+                </div>
             </div>
         </section>
 
@@ -469,7 +727,38 @@
     </main>
 
     <footer class="site-footer">
-        &copy; {{ now()->year }} {{ $settings->site_name ?? config('app.name', 'Photo Commerce') }}
+        <div class="container footer-inner">
+            <div>
+                <div class="footer-brand">{{ $settings->site_name ?? config('app.name', 'Photo Commerce') }}</div>
+                <p style="max-width:320px;">{{ $settings->site_slogan ?? 'Fotografia profissional' }}</p>
+                @if ($profile?->social_links)
+                    <div class="footer-social">
+                        @if (!empty($profile->social_links['instagram']))
+                            <a href="{{ $profile->social_links['instagram'] }}" target="_blank" rel="noopener" aria-label="Instagram">
+                                @include('components.icon', ['name' => 'instagram'])
+                            </a>
+                        @endif
+                        @if (!empty($profile->social_links['facebook']))
+                            <a href="{{ $profile->social_links['facebook'] }}" target="_blank" rel="noopener" aria-label="Facebook">
+                                @include('components.icon', ['name' => 'facebook'])
+                            </a>
+                        @endif
+                    </div>
+                @endif
+            </div>
+            <div>
+                <div class="footer-brand" style="font-size:1rem;">Navegação</div>
+                <nav style="display:flex; flex-direction:column; gap:.5rem; margin-top:.5rem;">
+                    <a href="#servicos">Serviços</a>
+                    <a href="#portfolio">Portfólio</a>
+                    <a href="#albuns">Álbuns</a>
+                    <a href="#contato">Contato</a>
+                </nav>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; {{ now()->year }} {{ $settings->site_name ?? config('app.name', 'Photo Commerce') }}
+        </div>
     </footer>
 
     <script>

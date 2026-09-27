@@ -37,6 +37,14 @@
 - `resources/views/home.blade.php` redesenhada: layout moderno (hero em gradiente, seções Sobre/Álbuns/Contato, cards com hover), responsivo em todas as larguras (grid fluido `auto-fill`, breakpoints para about/contato/nav).
 - Menu mobile em drawer lateral: desliza da esquerda para a direita ao abrir (`translateX(-100%)` → `translateX(0)`) e no sentido inverso ao fechar, com overlay animado, ícone hambúrguer que vira "X", bloqueio de scroll do body, fechamento por clique fora, por link ou tecla `Esc`, e `prefers-reduced-motion` respeitado.
 
+#### 🖼️ Fotos de capa reais + página comercial completa
+- Substituídos os gradientes abstratos por **20 fotos reais** (Unsplash, licença de uso livre), curadas por tema (casamento, ensaio/retrato, aniversário, corporativo, gestante, newborn) e versionadas em `database/seeders/assets/demo-photos/`. `PublicShowcaseSeeder` agora copia essas fotos para o disco `photos_public` (6 capas de álbum + 14 fotos de galeria distribuídas entre os álbuns) em vez de gerar imagens via GD.
+- `HomeController` agora também carrega `Photo`/`PhotoFile` publicados para uma seção de **Portfólio** (mosaico responsivo com hover) e resolve as URLs de imagem no controller (`cover_url`, `image_url`).
+- Nova seção **Serviços**: um cartão por categoria de álbum com ícone SVG próprio e link direto de WhatsApp com mensagem pré-preenchida por categoria (`components/icon.blade.php`).
+- Novas seções **Como funciona** (processo em 4 passos) e **CTA final** ("Vamos registrar sua história?"), além de rodapé com navegação e redes sociais.
+- Hero mantido em gradiente de marca (sem foto de fundo) para nunca exibir uma imagem temática incorreta como primeira impressão do site.
+- **Nota importante:** bio, descrições de serviço, fotos e perfil do fotógrafo ainda são **conteúdo de demonstração**. Antes de comercializar de fato, é necessário substituir por texto e fotos reais do negócio — o site não inclui depoimentos ou estatísticas fabricadas propositalmente, para não induzir clientes reais a erro.
+
 ## 🎉 [v1.0.0-RC1] — 2026-09-25 20:00
 ### Build: `20260925-RC1` · Tag GitHub: `v1.0.0`
 
