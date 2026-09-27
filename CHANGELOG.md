@@ -24,7 +24,13 @@
 - Cron do usuário configurado (inexistente antes): `schedule:run` e `queue:work --stop-when-empty` a cada minuto — sem isso o agendador (limpeza de pedidos expirados, relatório diário) e as filas de e-mail/pedido nunca eram processados.
 - Removidos ~13 arquivos `error_log` soltos gerados em `app/`, `database/`, `tests/`, `config/`, `routes/` etc.
 - **Pendente (requer o usuário):** `MERCADOPAGO_ACCESS_TOKEN` e `MERCADOPAGO_PUBLIC_KEY` não estão definidos no `.env` de produção — checkout/pagamento não funciona até essas credenciais serem cadastradas.
-- **Pendente:** a home pública e os módulos de negócio (controllers de Admin/Customer/Auth/API) continuam ausentes do código-fonte; a correção de infraestrutura não substitui a implementação das funcionalidades do sistema.
+- **Pendente:** os módulos de negócio (controllers de Admin/Customer/Auth/API) continuam ausentes do código-fonte; a correção de infraestrutura não substitui a implementação das funcionalidades do sistema.
+
+#### 🌍 Home pública real
+- Criado `HomeController@index`, substituindo a rota `/` que renderizava a página padrão do Laravel (`welcome.blade.php`).
+- Nova view `resources/views/home.blade.php`: usa `SiteSetting` (nome, slogan, cores, fontes), `PhotographerProfile` (bio/contato/WhatsApp) e álbuns publicados/públicos (`Album` + `AlbumCategory`), com estado vazio tratado quando não há álbuns ou perfil cadastrados. Não depende de build do Vite (CSS próprio inline), evitando quebra em ambientes sem `npm run build`.
+- `tests/Feature/ExampleTest.php`: habilitado `RefreshDatabase` (estava comentado) — a rota `/` agora consulta o banco, exigindo migrations no teste.
+- Banco de produção auditado: sem álbuns, categorias, fotos ou perfil de fotógrafo cadastrados ainda — a home exibe estado vazio até o admin cadastrar esse conteúdo (painel administrativo ainda não implementado).
 
 ## 🎉 [v1.0.0-RC1] — 2026-09-25 20:00
 ### Build: `20260925-RC1` · Tag GitHub: `v1.0.0`
